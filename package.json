@@ -1,0 +1,23 @@
+{
+  "name": "flash-cards",
+  "version": "1.0.0",
+  "description": "",
+  "main": "CliController.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuliusDorfman/Flash-Cards.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JuliusDorfman/Flash-Cards/issues"
+  },
+  "homepage": "https://github.com/JuliusDorfman/Flash-Cards#readme",
+  "dependencies": {
+    "inquirer": "^3.3.0",
+    "prompt": "^1.0.0"
+  }
+}
