@@ -1,14 +1,15 @@
 const card = require("./card.js");
 const controller = require("./cliController.js");
+const inquirer = require("inquirer");
 // Deck Compiler
 
 
 module.exports = deckModule = {
-
     currentDeck: [],
     cardNum: 0,
 
     printProgrammingDeck: function() {
+        console.log("There are 3 Cards in this Deck");
         for (i in card.allCards) {
             if (card.allCards[i].topic == "\nTopic: Programming") {
                 deckModule.currentDeck.push(card.allCards[i]);
@@ -16,7 +17,6 @@ module.exports = deckModule = {
         }
         console.log(this.currentDeck[deckModule.cardNum].printQuestionInfo());
         controller.cardMovement();
-        deckModule.cardNum += 1
     },
 
     printMediaDeck: function() {
@@ -27,7 +27,6 @@ module.exports = deckModule = {
         }
         console.log(this.currentDeck[deckModule.cardNum].printQuestionInfo());
         controller.cardMovement();
-        deckModule.cardNum += 1
     },
 
     printPhilosophyDeck: function() {
@@ -38,30 +37,37 @@ module.exports = deckModule = {
         }
         console.log(this.currentDeck[deckModule.cardNum].printQuestionInfo());
         controller.cardMovement();
-        deckModule.cardNum += 1
     },
 
-    printProgrammingAnswer: function() {
-        for (i in card.allCards) {
-            if (card.allCards[i].topic == "\nProgramming") {
-                console.log(card.allCards[i].printAnswerInfo());
+    printAnswer: function() {
+        inquirer.prompt([{
+            name: "guess",
+            message: "Please Guess: "
+        }]).then(function(userChoice) {
+            var userChoice = userChoice.guess.toLowerCase();
+            if (userChoice == deckModule.currentDeck[deckModule.cardNum].answer.toLowerCase()) {
+                console.log("\nCorrect!");
+                controller.cardMovement();
+            } else {
+                console.log("\nIncorrect. Please guess again or 'Flip' to see answer.");
+                controller.cardMovement();
             }
-        }
+        })
     },
 
-    printMediaAnswer: function() {
-        for (i in card.allCards) {
-            if (card.allCards[i].topic == "\nMedia") {
-                console.log(card.allCards[i].printAnswerInfo());
-            }
-        }
+    flipCard: function() {
+        console.log("\n\nAnswer: ");
+        console.log(deckModule.currentDeck[deckModule.cardNum].printAnswerInfo());
+        controller.cardMovement();
     },
 
-    printPhilosophyAnswer: function() {
-        for (i in card.allCards) {
-            if (card.allCards[i].topic == "\nPhilosophy") {
-                console.log(card.allCards[i].printAnswerInfo());
-            }
+    nextCard: function() {
+        if (deckModule.cardNum < deckModule.currentDeck.length-1) {
+            deckModule.cardNum += 1;
+            console.log(this.currentDeck[deckModule.cardNum].printQuestionInfo());
+            controller.cardMovement();
+        } else {
+            console.log("End of Deck");
         }
-    }
+    },
 };

@@ -26,10 +26,11 @@ module.exports = cliController = {
 
                 default:
                     console.log("\n\n**You obviously didn't follow the initial instruction.**");
+                    cliController.startFlash();
             }
         })
     },
-    
+
     cardMovement: function() {
         console.log("-------- \nAnswer \nFlip \nNext \nExit  \n-------\n");
         inquirer.prompt([{
@@ -37,17 +38,18 @@ module.exports = cliController = {
             message: "Your Selection: "
         }]).then(function(userChoice) {
             var userChoice = userChoice.movement.toLowerCase();
+            const deckJS = require("./deck.js");
             switch (userChoice) {
                 case "answer":
-                deck
+                    deckJS.printAnswer();
                     break;
 
                 case "flip":
-                    console.log("Flip");
+                    deckJS.flipCard();
                     break;
 
                 case "next":
-                    console.log("Next");
+                    deckJS.nextCard();
                     break;
 
                 case "exit":
@@ -56,7 +58,9 @@ module.exports = cliController = {
 
                 default:
                     console.log("\n\n**You obviously didn't follow the initial instruction.**");
+                    console.log(deckJS.currentDeck[deckModule.cardNum].printQuestionInfo());
+                    cliController.cardMovement();
             }
         })
     }
-}
+};
